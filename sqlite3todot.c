@@ -14,6 +14,7 @@ May you share freely, never taking more than you give.
 */
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "sqlite3.h"
 
@@ -72,7 +73,7 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 
-	printf("digraph sqliteschema {\n", dbname);
+	printf("digraph sqliteschema {\n");
 	printf("node [shape=plaintext];\n");
 
 	if(have_meta) {
@@ -97,8 +98,7 @@ int main(int argc, char **argv) {
 
 	int curr_cluster = -1;
 	while(SQLITE_ROW == (rc = sqlite3_step(tbl_list_stmt))) {
-		int i;
-		const char *tbl_name = sqlite3_column_text(tbl_list_stmt, 0);
+		const char *tbl_name = (char *)sqlite3_column_text(tbl_list_stmt, 0);
 
 		int cluster_id = SQLITE_NULL==sqlite3_column_type(tbl_list_stmt,3)?-1:sqlite3_column_int(tbl_list_stmt,3);
 		if(cluster_id != curr_cluster && curr_cluster != -1) {
@@ -157,7 +157,7 @@ int main(int argc, char **argv) {
 
 	sqlite3_reset(tbl_list_stmt);
 	while(SQLITE_ROW == (rc = sqlite3_step(tbl_list_stmt))) {
-		const char *tbl_name = sqlite3_column_text(tbl_list_stmt, 0);
+		const char *tbl_name = (char *)sqlite3_column_text(tbl_list_stmt, 0);
 
 		char *fkey_info_sql = sqlite3_mprintf("PRAGMA foreign_key_list(%q)", tbl_name);
 		sqlite3_stmt *fkey_info_stmt;
@@ -185,5 +185,7 @@ int main(int argc, char **argv) {
 
 	sqlite3_finalize(tbl_list_stmt);
 	sqlite3_close(db);
+
+	return 0;
 }
 
