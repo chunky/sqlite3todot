@@ -18,13 +18,13 @@ CREATE TABLE IF NOT EXISTS tbl_cluster (
 	FOREIGN KEY(clusterid) REFERENCES cluster(clusterid)
 );
 
-INSERT INTO cluster (label,color) VALUES ("Blue Stuff", "blue");
-INSERT INTO cluster (label,color) VALUES ("Red Stuff", "red");
+INSERT INTO cluster (label,color) VALUES ('Blue Stuff', 'blue');
+INSERT INTO cluster (label,color) VALUES ('Red Stuff', 'red');
 
-INSERT INTO tbl_cluster (tbl_name, clusterid) VALUES ("tbl_cluster", (SELECT clusterid FROM cluster WHERE label="Blue Stuff"));
-INSERT INTO tbl_cluster (tbl_name, clusterid) VALUES ("cluster", (SELECT clusterid FROM cluster WHERE label="Blue Stuff"));
+INSERT INTO tbl_cluster (tbl_name, clusterid) VALUES ('tbl_cluster', (SELECT clusterid FROM cluster WHERE label='Blue Stuff'));
+INSERT INTO tbl_cluster (tbl_name, clusterid) VALUES ('cluster', (SELECT clusterid FROM cluster WHERE label='Blue Stuff'));
 
-INSERT INTO tbl_cluster (tbl_name, clusterid) VALUES ("ignorelist", (SELECT clusterid FROM cluster WHERE label="Red Stuff"));
+INSERT INTO tbl_cluster (tbl_name, clusterid) VALUES ('ignorelist', (SELECT clusterid FROM cluster WHERE label='Red Stuff'));
 
 
 -- These are simply put in as-is as graph-wide attributes
@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS graphsettings (
 	setting TEXT NOT NULL
 );
 
-INSERT INTO graphsettings (setting) VALUES ("rankdir=LR");
-INSERT INTO graphsettings (setting) VALUES ("splines=true");
-INSERT INTO graphsettings (setting) VALUES ("overlap=false");
+INSERT INTO graphsettings (setting) VALUES ('rankdir=LR');
+INSERT INTO graphsettings (setting) VALUES ('splines=true');
+INSERT INTO graphsettings (setting) VALUES ('overlap=false');
 
 
 -- Tables mentioned here aren't included in the output
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS ignorelist (
 );
 
 -- These are created by ANALYZE
-INSERT INTO ignorelist (tbl_name) VALUES ("sqlite_stat1");
-INSERT INTO ignorelist (tbl_name) VALUES ("sqlite_stat2");
+INSERT INTO ignorelist (tbl_name) VALUES ('sqlite_stat1');
+INSERT INTO ignorelist (tbl_name) VALUES ('sqlite_stat2');
 
 COMMIT;
 
